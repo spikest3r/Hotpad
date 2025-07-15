@@ -1,6 +1,10 @@
 # Hotpad
 Turn your numpad into hotkey pad! Open files/apps/websites, auto-input text and key combinations and more!
 
+[![Download Hotpad](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/hotpad/files/latest/download)
+
+[![Download Hotpad](https://img.shields.io/sourceforge/dt/hotpad.svg)](https://sourceforge.net/projects/hotpad/files/latest/download)
+
 ## How to use?
 
 Hotkeys work only when **NumLock is OFF**.
