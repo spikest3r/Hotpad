@@ -108,8 +108,8 @@ Window::Window(QWidget *parent, QApplication *a)
     actionArg2 = new QLineEdit(this);
     actionArg2->setGeometry(210,60+50+50,100,30);
     actionArg2->setVisible(false);
-    actionArg2->setPlaceholderText("Letter key");
-    actionArg2->setMaxLength(1);
+    actionArg2->setPlaceholderText("Key");
+    actionArg2->setMaxLength(6);
 
     // press key combo
     ctrlBox = new QCheckBox("CTRL",this);
@@ -147,7 +147,7 @@ Window::Window(QWidget *parent, QApplication *a)
                 ActionType action = hotkeyActions[i].type;
                 combo->setCurrentIndex((int)action);
                 actionArg1->setText(QString::fromStdWString(hotkeyActions[i].path));
-                actionArg2->setText(QString(QChar(hotkeyActions[i].letter)));
+                actionArg2->setText(QString(hotkeyActions[i].letter));
                 for(int j = 0; j < 3; j++) {
                     casArr[j]->setCheckState(hotkeyActions[i].comboKeys[j] ? Qt::Checked : Qt::Unchecked);
                 }
@@ -158,6 +158,24 @@ Window::Window(QWidget *parent, QApplication *a)
             i++;
         }
     }
+
+    QPushButton* button = new QPushButton(QString::number(0),this);
+    button->setGeometry(20,10+(3*50+10),50*2,50);
+    QObject::connect(button, &QPushButton::pressed, [combo,selectedKeyLabel,casArr]() {
+        combo->setVisible(true); // in case it isnt
+        selectedKeyLabel->setText("Key: " + QString::number(0));
+        ignoreComboEvent = true;
+        ActionType action = hotkeyActions[0].type;
+        combo->setCurrentIndex((int)action);
+        actionArg1->setText(QString::fromStdWString(hotkeyActions[0].path));
+        actionArg2->setText(QString(hotkeyActions[0].letter));
+        for(int j = 0; j < 3; j++) {
+            casArr[j]->setCheckState(hotkeyActions[0].comboKeys[j] ? Qt::Checked : Qt::Unchecked);
+        }
+        UpdateUI(action);
+        ignoreComboEvent = false;
+        selectedKey = 0;
+    });
 
     QObject::connect(combo, &QComboBox::currentIndexChanged, [](int index) {
         if(ignoreComboEvent) return;
@@ -175,7 +193,7 @@ Window::Window(QWidget *parent, QApplication *a)
 
     QObject::connect(actionArg2, &QLineEdit::textChanged, [](const QString& text) {
         if(ignoreComboEvent) return;
-        hotkeyActions[selectedKey].letter = text.isEmpty() ? '\0' : text[0].toLatin1();
+        hotkeyActions[selectedKey].letter = text;
         SaveSettings();
     });
 

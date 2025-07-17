@@ -13,7 +13,7 @@ Hotkeys work only when **NumLock is OFF**.
 
 - Press Asterisk to open settings.
 
-- Press 1 - 9 to invoke hotkey
+- Press 0 - 9 to invoke hotkey
 
 ## What hotkey mappings are possible?
 
@@ -23,10 +23,6 @@ Right now you can open file (it can be any file or app, but always specify full 
 
 In future I plan to add more features like:
 
-- In auto input ability to use F1-F12, Tab, Delete and Insert aside from just letter/number.
-
 - File dialog to make selecting file/executable easier.
-
-- Add 0 button as possible hotkey.
 
 - Add layers so you can have different hotkeys for different situations. (Planned to switch layers with Numpad Dot key).

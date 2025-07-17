@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <string>
+#include <QApplication>
 
 #ifndef ACTIONS_H
 #define ACTIONS_H
@@ -17,7 +18,7 @@ struct ActionData {
     ActionType type = ActionType::NoAction;
     std::wstring path;
 
-    char letter; // for combo
+    QString letter; // for combo
     bool comboKeys[4] = {false,false,false,false}; // ctrl, alt, shift, win
 };
 

@@ -69,11 +69,33 @@ void ReportScancode(int scanCode) {
                 keyDown.ki.wVk = keys[i];
                 inputs.push_back(keyDown);
             }
-            if(action.letter != NULL) {
+            if(!action.letter.isEmpty()) {
                 INPUT keyDown = {};
                 keyDown.type = INPUT_KEYBOARD;
-                SHORT vk = VkKeyScan(action.letter);
-                keyDown.ki.wVk = LOBYTE(vk);
+
+                QString key = action.letter.toLower();
+                if(key == "tab") {
+                    keyDown.ki.wVk = VK_TAB;
+                } else if(key.startsWith("ins")) {
+                    keyDown.ki.wVk = VK_INSERT;
+                } else if(key.startsWith("del")) {
+                    keyDown.ki.wVk = VK_DELETE;
+                } else {
+                    if(key.length() == 2 && key.startsWith('f')) {
+                        int fKey = QString(key[1]).toInt();
+                        int baseKey = VK_F1; // 0x70
+                        if(fKey > 0 && fKey < 25) { // valid between f1-f24 in winapi
+                            fKey--;
+                            baseKey += fKey;
+                            keyDown.ki.wVk = baseKey;
+                        }
+                    } else {
+                        // treat as regular letter key
+                        SHORT vk = VkKeyScan(action.letter[0].toLatin1());
+                        keyDown.ki.wVk = LOBYTE(vk);
+                    }
+                }
+
                 inputs.push_back(keyDown);
 
                 INPUT keyUp = keyDown;

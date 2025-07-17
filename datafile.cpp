@@ -65,7 +65,7 @@ void LoadSettings() {
             }
             hotkeyActions[i].path = path.toStdWString();
             hotkeyActions[i].type = type;
-            hotkeyActions[i].letter = letter[0].toLatin1();
+            hotkeyActions[i].letter = letter.split("|")[0]; // split EOL and letter
             i++;
         }
     }
